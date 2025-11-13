@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Actualizar Proveedor{% endblock %}
+
+{% block content %}
+<div class="card shadow-lg mx-auto" style="max-width: 600px;">
+    <div class="card-header text-white" style="background-color: #ffc107;">
+        <h4 class="mb-0">✏️ Actualizar Proveedor: {{ proveedor.nombre_empresa }}</h4>
+    </div>
+    <div class="card-body">
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'realizar_actualizacion_proveedor' proveedor.id %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="nombre_empresa" class="form-label">Nombre de la Empresa</label>
+                <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" value="{{ proveedor.nombre_empresa }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="contacto_principal" class="form-label">Contacto Principal</label>
+                <input type="text" class="form-control" id="contacto_principal" name="contacto_principal" value="{{ proveedor.contacto_principal }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" value="{{ proveedor.telefono|default_if_none:"" }}">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ proveedor.email }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" value="{{ proveedor.direccion }}" required>
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="activo" name="activo" {% if proveedor.activo %}checked{% endif %}>
+                <label class="form-check-label" for="activo">Activo</label>
+            </div>
+            <button type="submit" class="btn btn-warning w-100">Guardar Cambios</button>
+        </form>
+        <a href="{% url 'ver_proveedores' %}" class="btn btn-secondary w-100 mt-2">Cancelar</a>
+    </div>
+</div>
+{% endblock %}

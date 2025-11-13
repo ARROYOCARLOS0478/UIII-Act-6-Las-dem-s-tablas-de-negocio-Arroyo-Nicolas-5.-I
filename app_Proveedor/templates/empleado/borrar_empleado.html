@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Borrar Empleado{% endblock %}
+
+{% block content %}
+<div class="card shadow-lg mx-auto mt-5" style="max-width: 500px;">
+    <div class="card-header text-white bg-danger">
+        <h4 class="mb-0"><i class="bi bi-trash-fill"></i> Confirmar Eliminación</h4>
+    </div>
+    <div class="card-body">
+        
+        <div class="alert alert-warning" role="alert">
+            Estás a punto de eliminar permanentemente al siguiente empleado:
+        </div>
+        
+        <h5 class="card-title text-danger">{{ empleado.nombre }}</h5>
+        <p class="card-text">
+            <strong>ID:</strong> {{ empleado.id }}<br>
+            <strong>Puesto:</strong> {{ empleado.puesto }}<br>
+            <strong>Salario:</strong> ${{ empleado.salario|floatformat:2 }}<br>
+            <strong>Ingreso:</strong> {{ empleado.fecha_ingreso|date:"d M Y" }}
+        </p>
+
+        <p class="mt-4">
+            **¿Estás absolutamente seguro de que deseas continuar? Esta acción es irreversible.**
+        </p>
+
+        <form method="post" action="{% url 'borrar_empleado' empleado.pk %}">
+            {% csrf_token %}
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-danger mt-3">
+                    <i class="bi bi-x-octagon-fill"></i> Sí, Eliminar Definitivamente
+                </button>
+                <a href="{% url 'ver_empleados' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left-circle-fill"></i> Cancelar y Volver
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

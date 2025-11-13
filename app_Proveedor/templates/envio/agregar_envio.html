@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Envío{% endblock %}
+
+{% block content %}
+<div class="card shadow-lg mx-auto mt-5" style="max-width: 600px;">
+    <div class="card-header text-white" style="background-color: #FFA500;">
+        <h4 class="mb-0"><i class="bi bi-send-fill"></i> Registrar Nuevo Envío</h4>
+    </div>
+    <div class="card-body">
+        
+        {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endif %}
+        
+        <form method="post" action="{% url 'agregar_envio' %}">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_cliente" class="form-label">Cliente</label>
+                <select class="form-select" id="id_cliente" name="id_cliente" required>
+                    <option value="">Seleccione un cliente...</option>
+                    {% for c in clientes %}
+                        <option value="{{ c.id }}" {% if form_data.id_cliente|stringformat:"s" == c.id|stringformat:"s" %}selected{% endif %}>
+                            {{ c.nombre }} (ID: {{ c.id }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="pais" class="form-label">País de Destino</label>
+                <input type="text" class="form-control" id="pais" name="pais" 
+                       value="{{ form_data.pais|default:'' }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección de Destino</label>
+                <textarea class="form-control" id="direccion" name="direccion" rows="3" required>{{ form_data.direccion|default:'' }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado del Envío</label>
+                <select class="form-select" id="estado" name="estado" required>
+                    {% for key, value in estados %}
+                        <option value="{{ key }}" {% if form_data.estado == key %}selected{% endif %}>
+                            {{ value }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn text-white w-100" style="background-color: #FFA500;"><i class="bi bi-save-fill"></i> Registrar Envío</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

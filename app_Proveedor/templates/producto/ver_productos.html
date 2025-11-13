@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Inventario de Productos{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    
+    <h2 class="mb-4" style="color: #007bff;"><i class="bi bi-box-seam-fill"></i> Inventario de Productos</h2>
+    <a href="{% url 'agregar_producto' %}" class="btn btn-primary mb-3 text-white"><i class="bi bi-plus-circle-fill"></i> Agregar Nuevo</a>
+
+    {% if productos %}
+    <div class="table-responsive">
+        <table class="table table-hover table-striped shadow-sm">
+            <thead class="text-white" style="background-color: #007bff;">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>SKU</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Proveedor</th>
+                    <th>Distribuidores</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in productos %}
+                <tr>
+                    <td>{{ p.id }}</td>
+                    <td>{{ p.nombre }}</td>
+                    <td><span class="badge bg-secondary">{{ p.sku }}</span></td>
+                    <td>${{ p.precio|floatformat:2 }}</td>
+                    <td>{{ p.stock_actual }}</td>
+                    <td>{{ p.proveedor.nombre_empresa }}</td>
+                    
+                    <td>
+                        {% for d in p.distribuidores.all %}
+                            <span class="badge bg-info text-dark me-1" style="background-color: #f7f7f7; border: 1px solid #ddd;">{{ d.nombre_distribuidor }}</span>
+                        {% empty %}
+                            <span class="text-muted fst-italic">Sin asignar</span>
+                        {% endfor %}
+                    </td>
+                    
+                    <td class="text-center">
+                        <a href="{% url 'actualizar_producto' p.id %}" class="btn btn-sm btn-warning me-1" title="Editar"><i class="bi bi-pencil-fill"></i></a>
+                        <a href="{% url 'borrar_producto' p.id %}" class="btn btn-sm btn-danger" title="Borrar"><i class="bi bi-trash-fill"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No se encontraron productos registrados.
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

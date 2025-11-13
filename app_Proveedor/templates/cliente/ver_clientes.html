@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Clientes{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    
+    <h2 class="mb-4" style="color: #007bff;"><i class="bi bi-person-badge-fill"></i> Lista de Clientes</h2>
+    <a href="{% url 'agregar_cliente' %}" class="btn btn-primary mb-3 text-white"><i class="bi bi-plus-circle-fill"></i> Agregar Nuevo</a>
+
+    {% if clientes %}
+    <div class="table-responsive">
+        <table class="table table-hover table-striped shadow-sm">
+            <thead class="text-white" style="background-color: #007bff;">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>País</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in clientes %}
+                <tr>
+                    <td>{{ c.id }}</td>
+                    <td>{{ c.nombre }}</td>
+                    <td>{{ c.email }}</td>
+                    <td>{{ c.telefono }}</td>
+                    <td>{{ c.direccion }}</td>
+                    <td>{{ c.pais }}</td>
+                    
+                    <td class="text-center">
+                        <a href="{% url 'actualizar_cliente' c.id %}" class="btn btn-sm btn-warning me-1" title="Editar"><i class="bi bi-pencil-fill"></i></a>
+                        <a href="{% url 'borrar_cliente' c.id %}" class="btn btn-sm btn-danger" title="Borrar"><i class="bi bi-trash-fill"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No se encontraron clientes registrados.
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

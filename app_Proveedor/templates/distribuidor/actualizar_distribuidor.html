@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Actualizar Distribuidor{% endblock %}
+
+{% block content %}
+<div class="card shadow-lg mx-auto" style="max-width: 600px;">
+    <div class="card-header text-white" style="background-color: #ff8c00;">
+        <h4 class="mb-0">✏️ Actualizar Distribuidor: {{ distribuidor.nombre_distribuidor }}</h4>
+    </div>
+    <div class="card-body">
+        {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="{% url 'realizar_actualizacion_distribuidor' distribuidor.id %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="nombre_distribuidor" class="form-label">Nombre del Distribuidor</label>
+                <input type="text" class="form-control" id="nombre_distribuidor" name="nombre_distribuidor" value="{{ distribuidor.nombre_distribuidor }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="tipo_servicio" class="form-label">Tipo de Servicio</label>
+                <select class="form-select" id="tipo_servicio" name="tipo_servicio" required>
+                    <option value="LOCAL" {% if distribuidor.tipo_servicio == 'LOCAL' %}selected{% endif %}>Local</option>
+                    <option value="NACIONAL" {% if distribuidor.tipo_servicio == 'NACIONAL' %}selected{% endif %}>Nacional</option>
+                    <option value="INTERNACIONAL" {% if distribuidor.tipo_servicio == 'INTERNACIONAL' %}selected{% endif %}>Internacional</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="ciudad" class="form-label">Ciudad</label>
+                <input type="text" class="form-control" id="ciudad" name="ciudad" value="{{ distribuidor.ciudad }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="pais" class="form-label">País</label>
+                <input type="text" class="form-control" id="pais" name="pais" value="{{ distribuidor.pais }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="tiempo_entrega_dias" class="form-label">Tiempo de Entrega (días)</label>
+                <input type="number" class="form-control" id="tiempo_entrega_dias" name="tiempo_entrega_dias" value="{{ distribuidor.tiempo_entrega_dias }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="comision" class="form-label">Comisión (%)</label>
+                <input type="number" step="0.01" class="form-control" id="comision" name="comision" value="{{ distribuidor.comision }}" required>
+            </div>
+            
+            <button type="submit" class="btn btn-warning w-100 text-white">Guardar Cambios</button>
+        </form>
+        <a href="{% url 'ver_distribuidores' %}" class="btn btn-secondary w-100 mt-2">Cancelar</a>
+    </div>
+</div>
+{% endblock %}

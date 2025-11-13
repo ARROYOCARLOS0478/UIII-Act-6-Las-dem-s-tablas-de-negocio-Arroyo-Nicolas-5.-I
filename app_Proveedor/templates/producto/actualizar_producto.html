@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Actualizar Producto{% endblock %}
+
+{% block content %}
+<div class="card shadow-lg mx-auto mt-5" style="max-width: 600px;">
+    <div class="card-header text-white" style="background-color: #007bff;">
+        <h4 class="mb-0"><i class="bi bi-pencil-square"></i> Editar Producto: {{ producto.nombre }}</h4>
+    </div>
+    <div class="card-body">
+        
+        {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endif %}
+        
+        <form method="post" action="{% url 'realizar_actualizacion_producto' producto.pk %}">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="sku" class="form-label">SKU/Código</label>
+                <input type="text" class="form-control" id="sku" name="sku" 
+                       value="{{ form_data.sku|default:producto.sku }}" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="nombre_producto" class="form-label">Nombre del Producto</label>
+                <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" 
+                       value="{{ form_data.nombre_producto|default:producto.nombre }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ form_data.descripcion|default:producto.descripcion|default:'' }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="precio" class="form-label">Precio ($)</label>
+                <input type="number" step="0.01" class="form-control" id="precio" name="precio" 
+                       value="{{ form_data.precio|default:producto.precio }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="stock" class="form-label">Stock Actual</label>
+                <input type="number" class="form-control" id="stock" name="stock" 
+                       value="{{ form_data.stock|default:producto.stock_actual }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="proveedor_id" class="form-label">Proveedor</label>
+                <select class="form-select" id="proveedor_id" name="proveedor_id" required>
+                    <option value="">Seleccione un proveedor...</option>
+                    {% for p in proveedores %}
+                        {% with current_supplier_id=form_data.proveedor_id|default:producto.proveedor.id|stringformat:"s" %}
+                        <option value="{{ p.id }}" 
+                            {% if p.id|stringformat:"s" == current_supplier_id %}selected{% endif %}>
+                            {{ p.nombre_empresa }} (ID: {{ p.id }})
+                        </option>
+                        {% endwith %}
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="distribuidores" class="form-label">Distribuidores Asignados</label>
+                <select class="form-select" id="distribuidores" name="distribuidores" multiple size="4">
+                    {% for d in distribuidores %}
+                        
+                        <option value="{{ d.id }}" 
+                            {% if form_data %}
+                                {% if d.id|stringformat:"s" in form_data.distribuidores %}selected{% endif %}
+                            {% else %}
+                                {% if d in producto.distribuidores.all %}selected{% endif %}
+                            {% endif %}>
+                            {{ d.nombre_distribuidor }} (Servicio: {{ d.tipo_servicio }})
+                        </option>
+                        
+                    {% endfor %}
+                </select>
+                <small class="form-text text-muted">Mantén presionada la tecla Ctrl/Cmd para seleccionar varios.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary text-white w-100"><i class="bi bi-save-fill"></i> Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

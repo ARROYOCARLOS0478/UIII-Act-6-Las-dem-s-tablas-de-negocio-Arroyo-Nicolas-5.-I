@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Ver Distribuidores{% endblock %}
+
+{% block content %}
+<h2 class="mb-4" style="color: #ff8c00;"><i class="bi bi-list-task"></i> Lista de Distribuidores</h2>
+<a href="{% url 'agregar_distribuidor' %}" class="btn btn-warning mb-3 text-white"><i class="bi bi-plus-circle-fill"></i> Agregar Nuevo</a>
+
+{% if distribuidores %}
+<div class="table-responsive">
+    <table class="table table-hover table-striped shadow-sm">
+        <thead class="text-white" style="background-color: #ff8c00;">
+            <tr>
+                <th>ID</th>
+                <th>Distribuidor</th>
+                <th>Servicio</th>
+                <th>Ubicación</th>
+                <th>Entrega (días)</th>
+                <th>Comisión (%)</th>
+                <th>Última Revisión</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in distribuidores %}
+            <tr>
+                <td>{{ d.id }}</td>
+                <td>{{ d.nombre_distribuidor }}</td>
+                <td>{{ d.get_tipo_servicio_display }}</td>
+                <td>{{ d.ciudad }}, {{ d.pais }}</td>
+                <td>{{ d.tiempo_entrega_dias }}</td>
+                <td>{{ d.comision }}%</td>
+                <td>{{ d.ultima_revision|date:"d M Y" }}</td>
+                <td class="text-center">
+                    <a href="{% url 'actualizar_distribuidor' d.id %}" class="btn btn-sm btn-warning me-1" title="Editar"><i class="bi bi-pencil-fill"></i></a>
+                    <a href="{% url 'borrar_distribuidor' d.id %}" class="btn btn-sm btn-danger" title="Borrar"><i class="bi bi-trash-fill"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-warning">
+    No se encontraron distribuidores registrados.
+</div>
+{% endif %}
+{% endblock %}

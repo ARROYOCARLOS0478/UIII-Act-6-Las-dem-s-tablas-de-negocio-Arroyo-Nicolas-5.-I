@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Borrar Envío{% endblock %}
+
+{% block content %}
+<div class="card shadow-lg mx-auto mt-5" style="max-width: 500px;">
+    <div class="card-header text-white bg-danger">
+        <h4 class="mb-0"><i class="bi bi-trash-fill"></i> Confirmar Eliminación</h4>
+    </div>
+    <div class="card-body">
+        
+        <div class="alert alert-warning" role="alert">
+            Estás a punto de eliminar permanentemente el siguiente envío:
+        </div>
+        
+        <h5 class="card-title text-danger">Envío #{{ envio.id }} a {{ envio.id_cliente.nombre }}</h5>
+        <p class="card-text">
+            <strong>Estado:</strong> {{ envio.get_estado_display }}<br>
+            <strong>País:</strong> {{ envio.pais }}<br>
+            <strong>Fecha:</strong> {{ envio.fecha_envio|date:"d M Y" }}
+        </p>
+
+        <p class="mt-4">
+            **¿Estás absolutamente seguro de que deseas continuar? Esta acción es irreversible.**
+        </p>
+
+        <form method="post" action="{% url 'borrar_envio' envio.pk %}">
+            {% csrf_token %}
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-danger mt-3">
+                    <i class="bi bi-x-octagon-fill"></i> Sí, Eliminar Definitivamente
+                </button>
+                <a href="{% url 'ver_envios' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left-circle-fill"></i> Cancelar y Volver
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

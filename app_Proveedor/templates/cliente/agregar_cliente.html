@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Agregar Cliente{% endblock %}
+
+{% block content %}
+<div class="card shadow-lg mx-auto mt-5" style="max-width: 600px;">
+    <div class="card-header text-white" style="background-color: #007bff;">
+        <h4 class="mb-0"><i class="bi bi-person-plus-fill"></i> Agregar Nuevo Cliente</h4>
+    </div>
+    <div class="card-body">
+        
+        {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endif %}
+        
+        <form method="post" action="{% url 'agregar_cliente' %}">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre Completo</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" 
+                       value="{{ form_data.nombre|default:'' }}" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo Electrónico (Único)</label>
+                <input type="email" class="form-control" id="email" name="email" 
+                       value="{{ form_data.email|default:'' }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" 
+                       value="{{ form_data.telefono|default:'' }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección</label>
+                <textarea class="form-control" id="direccion" name="direccion" rows="3" required>{{ form_data.direccion|default:'' }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="pais" class="form-label">País</label>
+                <input type="text" class="form-control" id="pais" name="pais" 
+                       value="{{ form_data.pais|default:'' }}" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary text-white w-100"><i class="bi bi-save-fill"></i> Guardar Cliente</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

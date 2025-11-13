@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %} 
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10 text-center">
+        <h1 class="display-4" style="color: #007bff;">Sistema de Administración BYD</h1>
+        <p class="lead">Plataforma de gestión de inventarios y logística para proveedores, distribuidores y productos.</p>
+        <hr class="my-4">
+    </div>
+</div>
+
+<div class="row justify-content-center mb-5">
+    
+    <div class="col-md-4 mb-4">
+        <a href="{% url 'ver_proveedores' %}" class="text-decoration-none">
+            <div class="card shadow-lg h-100 border-success border-3 zoom-effect">
+                <div class="card-body text-center">
+                    <img src="{% static 'app_Proveedor/img/proveedor.PNG' %}" 
+                          alt="Icono Proveedor" 
+                          class="mb-3" 
+                          style="width: 96px; height: 96px;"> 
+                    <h5 class="card-title text-success">MÓDULO PROVEEDOR</h5>
+                    <p class="card-text text-muted">Gestión completa del CRUD de la información de las empresas proveedoras.</p>
+                    <span class="badge bg-success">ACTIVO</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <a href="{% url 'ver_distribuidores' %}" class="text-decoration-none">
+            <div class="card shadow-lg h-100 border-warning border-3 zoom-effect">
+                <div class="card-body text-center">
+                    <img src="{% static 'app_Proveedor/img/distribuidor.png' %}" alt="Icono Distribuidor" class="mb-3" style="width: 96px; height: 96px;">
+                    <h5 class="card-title text-warning">MÓDULO DISTRIBUIDOR</h5>
+                    <p class="card-text text-muted">Administración de los distribuidores logísticos.</p>
+                    <span class="badge bg-warning text-dark">ACTIVO</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <a href="{% url 'ver_productos' %}" class="text-decoration-none">
+            <div class="card shadow-lg h-100 border-info border-3 zoom-effect">
+                <div class="card-body text-center">
+                    <img src="{% static 'app_Proveedor/img/producto.png' %}" alt="Icono Producto" class="mb-3" style="width: 96px; height: 96px;">
+                    <h5 class="card-title text-info">MÓDULO PRODUCTO</h5>
+                    <p class="card-text text-muted">Gestión y control del catálogo de productos y su stock.</p>
+                    <span class="badge bg-info">ACTIVO</span>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <a href="{% url 'ver_empleados' %}" class="text-decoration-none">
+            <div class="card shadow-lg h-100 border-danger border-3 zoom-effect">
+                <div class="card-body text-center">
+                    <img src="{% static 'app_Proveedor/img/empleado.png' %}" class="mb-3" style="width: 96px; height: 96px;">
+                    <h5 class="card-title text-danger">MÓDULO EMPLEADO</h5>
+                    <p class="card-text text-muted">Gestión del personal: puestos, salarios y datos de ingreso.</p>
+                    <span class="badge bg-danger">ACTIVO</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <a href="{% url 'ver_clientes' %}" class="text-decoration-none">
+            <div class="card shadow-lg h-100 border-primary border-3 zoom-effect">
+                <div class="card-body text-center">
+                    <img src="{% static 'app_Proveedor/img/cliente.png' %}" alt="Icono Producto" class="mb-3" style="width: 96px; height: 96px;">
+                    <h5 class="card-title text-primary">MÓDULO CLIENTES</h5>
+                    <p class="card-text text-muted">Gestión completa de la información de los clientes.</p>
+                    <span class="badge bg-primary">ACTIVO</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <a href="{% url 'ver_ventas' %}" class="text-decoration-none">
+            <div class="card shadow-lg h-100 border-success border-3 zoom-effect" style="border-color: #4CAF50 !important;">
+                <div class="card-body text-center">
+                    <img src="{% static 'app_Proveedor/img/venta.png' %}" alt="Icono Producto" class="mb-3" style="width: 96px; height: 96px;">
+                    <h5 class="card-title" style="color: #4CAF50;">MÓDULO VENTAS</h5>
+                    <p class="card-text text-muted">Registro y seguimiento del historial de transacciones.</p>
+                    <span class="badge bg-success">ACTIVO</span>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <a href="{% url 'ver_envios' %}" class="text-decoration-none">
+            <div class="card shadow-lg h-100 border-warning border-3 zoom-effect" style="border-color: #FFA500 !important;">
+                <div class="card-body text-center">
+                    <img src="{% static 'app_Proveedor/img/envios.png' %}" alt="Icono Producto" class="mb-3" style="width: 96px; height: 96px;">
+                    <h5 class="card-title" style="color: #FFA500;">MÓDULO ENVÍOS</h5>
+                    <p class="card-text text-muted">Control de la logística y el estado de entrega.</p>
+                    <span class="badge bg-warning text-dark">ACTIVO</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+</div>
+
+
+<style>
+/* Estilo opcional para un efecto de zoom al pasar el ratón */
+.zoom-effect {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.zoom-effect:hover {
+    transform: scale(1.03);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+</style>
+
+{% endblock %}

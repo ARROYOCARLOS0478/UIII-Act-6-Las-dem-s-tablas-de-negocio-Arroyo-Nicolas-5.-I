@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Agregar Proveedor{% endblock %}
+
+{% block content %}
+<div class="card shadow-lg mx-auto" style="max-width: 600px;">
+    <div class="card-header text-white" style="background-color: #28a745;">
+        <h4 class="mb-0">➕ Agregar Nuevo Proveedor</h4>
+    </div>
+    <div class="card-body">
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+        
+        <form method="post" action="{% url 'agregar_proveedor' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="nombre_empresa" class="form-label">Nombre de la Empresa</label>
+                <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" required>
+            </div>
+            <div class="mb-3">
+                <label for="contacto_principal" class="form-label">Contacto Principal</label>
+                <input type="text" class="form-control" id="contacto_principal" name="contacto_principal" required>
+            </div>
+            <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" name="telefono">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" required>
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="activo" name="activo" checked>
+                <label class="form-check-label" for="activo">Activo</label>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Guardar Proveedor</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
